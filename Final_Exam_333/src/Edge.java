@@ -33,8 +33,10 @@ public class Edge {
 	
 	
 	// TODO: Implement
-	public Float getWeight() {
-		return null;
+	public float getWeight() {
+		if(isRushHour)
+			return (float) ((length * congestionFactor) / (speedLimit * numLanes) / 10.0);
+		return (float) (length / (speedLimit * numLanes) / 10.0);
 	}
 	
 	// Implemented for you:

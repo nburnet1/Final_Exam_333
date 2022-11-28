@@ -14,6 +14,11 @@ public class Node {
 		this.id = id;
 		this.name = name;
 	}
+
+	public Comparable<Node> compareTo(){
+		Comparable<Node> test;
+		return null;
+	}
 	
 	// Done for you
 	public void addEdge(Edge edge) {
@@ -22,6 +27,10 @@ public class Node {
 	
 	// Implemented for you:
 	public Edge getBackEdge(Node node) {
+		for(Edge edge: outboundEdges){
+			if(edge.target.equals(node))
+				return edge;
+		}
 		return null;
 	}
 	
