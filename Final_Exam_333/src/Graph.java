@@ -13,19 +13,21 @@ public class Graph {
 	public void doDijkstra(Node source, boolean isRushHour) {
 		
 	}
-	private void initializeSingleSource (Graph g, Node s){
-		for(Node node: g.nodes){
+	private void initializeSingleSource (int s){
+		for(Node node: nodes){
 			node.d = Integer.MAX_VALUE;
 			node.p = null;
 		}
-		s.d = 0;
+		nodes.get(s).d = 0;
 
 	}
-	private void relax(Node u, Node v, float weight){
+	private void relax(Node u, Node v){
 		if(u.d == Integer.MAX_VALUE)
 			return;
-		if(v.d > u.d + weight){
-			v.d = u.d + weight;
+
+		Edge edge = v.getBackEdge(u);
+		if(v.d > u.d + edge.getWeight()){
+			v.d = u.d + edge.getWeight();
 			v.p = u;
 		}
 
