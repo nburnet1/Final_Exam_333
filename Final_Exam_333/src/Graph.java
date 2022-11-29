@@ -19,7 +19,6 @@ public class Graph {
 			node.p = null;
 		}
 		nodes.get(s).d = 0;
-
 	}
 	private void relax(Node u, Node v){
 		if(u.d == Integer.MAX_VALUE)
