@@ -26,11 +26,37 @@ public class Tester {
 
 		Scanner key = new Scanner(System.in);
 
-		String inpt = key.nextLine();
-		int count = 0;
+		boolean contin = true;
+		String inpt;
 		String origin;
 		String destination;
 		boolean isRushHour;
+
+		while(contin){
+			System.out.println("Please enter the Node Source letter: ");
+			origin = key.nextLine();
+			System.out.println("Please enter the Node Destination letter: ");
+			destination = key.nextLine();
+			System.out.print("Is it rush hour? (y/N): ");
+			inpt = key.nextLine();
+			if(inpt.toLowerCase().startsWith("y"))
+				isRushHour = true;
+			else
+				isRushHour = false;
+
+			System.out.println("Calculating...");
+
+
+
+			System.out.println("Would you like to continue (Y/n): ");
+			inpt = key.nextLine();
+			if(inpt.toLowerCase().startsWith("n"))
+				contin = false;
+
+
+
+
+		}
 		
 	}
 
