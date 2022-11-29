@@ -3,7 +3,7 @@ import java.util.List;
 
 import org.json.simple.JSONObject;
 
-public class Node {
+public class Node implements Comparable<Node> {
 	public Integer id;
 	public String name;
 	public Node p;
@@ -15,10 +15,7 @@ public class Node {
 		this.name = name;
 	}
 
-	public Comparable<Node> compareTo(){
-		Comparable<Node> test;
-		return null;
-	}
+
 	
 	// Done for you
 	public void addEdge(Edge edge) {
@@ -54,6 +51,14 @@ public class Node {
 		entry.put("data", data);
 		return entry;
 	}
-		
 
+
+	public int compareTo(Node o) {
+		if (d == o.d)
+			return 1;
+		if (this.d > o.d) {
+			return -1;
+		}
+		return 0;
+	}
 }
