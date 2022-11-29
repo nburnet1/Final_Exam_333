@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Tester {
 	
 	
@@ -9,17 +11,26 @@ public class Tester {
 		System.out.println("Testing Code Here...");
 		
 		// Display Graph to the screen 
-		//test
+
 		System.out.println("Nodes:");
 		graph.printNodes();
 		System.out.println("Edges (NOT Rush Hour):");
 		graph.printEdges(false);
 		System.out.println("Edges (Rush Hour):");
 		graph.printEdges(true);
-		
-		
+
+
 		System.out.println("Outputting Graph to JavaScript file (open dijkstra.html in your web browser");
 		vis.save("output.js");
+
+
+		Scanner key = new Scanner(System.in);
+
+		String inpt = key.nextLine();
+		int count = 0;
+		String origin;
+		String destination;
+		boolean isRushHour;
 		
 	}
 
