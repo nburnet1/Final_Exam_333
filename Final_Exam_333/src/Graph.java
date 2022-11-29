@@ -1,4 +1,6 @@
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class Graph {
 	public List<Node> nodes;
@@ -11,14 +13,23 @@ public class Graph {
 	
 	// TODO: Implement
 	public void doDijkstra(Node source, boolean isRushHour) {
+		initializeSingleSource(source);
+		Queue<Node> pq = new PriorityQueue<>();
+		pq.addAll(nodes);
+		while(pq.size() != 0) {
+			Node u = pq.remove();
+			for(Node v : nodes) {
+				relax(u, v);
+			}
+		}
 		
 	}
-	private void initializeSingleSource (int s){
+	private void initializeSingleSource (Node nd){
 		for(Node node: nodes){
 			node.d = Integer.MAX_VALUE;
 			node.p = null;
 		}
-		nodes.get(s).d = 0;
+		nd.d = 0;
 	}
 	private void relax(Node u, Node v){
 		if(u.d == Integer.MAX_VALUE)
