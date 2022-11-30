@@ -25,9 +25,11 @@ public class Node implements Comparable<Node> {
 	// Implemented for you:
 	public Edge getBackEdge(Node node) {
 		for(Edge edge: outboundEdges){
+			System.out.println("\t\t\tEdge.target: " + edge.target + " node: " + node);
 			if(edge.target.equals(node))
 				return edge;
 		}
+		System.out.println("\t\t\tBack Edge Failed");
 		return null;
 	}
 	

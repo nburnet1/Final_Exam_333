@@ -16,9 +16,12 @@ public class Graph {
 		initializeSingleSource(source);
 		Queue<Node> pq = new PriorityQueue<>();
 		pq.addAll(nodes);
-		while(pq.size() != 0) {
+		while(!pq.isEmpty()) {
+			System.out.println("pqEmpty Ran");
 			Node u = pq.remove();
+			System.out.println("\tu: " + u);
 			for(Node v : nodes) {
+				System.out.println("\tv: " + v);
 				relax(u, v);
 			}
 		}
@@ -32,10 +35,12 @@ public class Graph {
 		nd.d = 0;
 	}
 	private void relax(Node u, Node v){
-		if(u.d == Integer.MAX_VALUE)
+		System.out.println("\t\tRelax ran");
+		if(u.d == Integer.MAX_VALUE || u.equals(v))
 			return;
 
-		Edge edge = v.getBackEdge(u);
+		System.out.println("\t\tRelax u Node: " + u + " Relax v Node: " + v);
+		Edge edge = u.getBackEdge(v);
 		if(v.d > u.d + edge.getWeight()){
 			v.d = u.d + edge.getWeight();
 			v.p = u;
@@ -46,7 +51,7 @@ public class Graph {
 	
 	// TODO: Implement
 	public void printDirections(Node source, Node destination, boolean isRushHour) {
-		
+		doDijkstra(source,isRushHour);
 	}
 	
 	private void printDashes(int numDashes) {

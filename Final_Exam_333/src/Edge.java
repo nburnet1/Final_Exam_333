@@ -31,12 +31,16 @@ public class Edge {
 		this.isRushHour = isRushHour;
 	}
 	
-	
+	public String getName(){
+		return name;
+	}
+
+
 	// TODO: Implement
 	public float getWeight() {
 		if(isRushHour)
-			return (float) ((length * congestionFactor) / (speedLimit * numLanes) / 10.0);
-		return (float) (length / (speedLimit * numLanes) / 10.0);
+			return (float) ((length * congestionFactor) / (speedLimit * numLanes * 10.0));
+		return (float) (this.length / (this.speedLimit * this.numLanes * 10.0));
 	}
 	
 	// Implemented for you:
