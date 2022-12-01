@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -5,61 +6,65 @@ import java.util.Queue;
 public class Graph {
 	public List<Node> nodes;
 	public List<Edge> edges;
-	
+
 	public Graph(List<Node> nodes, List<Edge> edges) {
 		this.nodes = nodes;
 		this.edges = edges;
 	}
-	
-	// TODO: Implement
-	public void doDijkstra(Node source, boolean isRushHour) {
-		initializeSingleSource(source);
-		Queue<Node> pq = new PriorityQueue<>();
-		pq.addAll(nodes);
-		while(!pq.isEmpty()) {
-			System.out.println("pqEmpty Ran");
-			Node u = pq.remove();
-			System.out.println("\tu: " + u);
-			for(Node v : nodes) {
-				System.out.println("\tv: " + v);
-				relax(u, v);
-			}
-		}
-		
-	}
-	private void initializeSingleSource (Node nd){
-		for(Node node: nodes){
+
+	private void initializeSingleSource( Node s) {
+		for(Node node : nodes) {
 			node.d = Integer.MAX_VALUE;
 			node.p = null;
 		}
-		nd.d = 0;
+		s.d = 0;
 	}
-	private void relax(Node u, Node v){
-		System.out.println("\t\tRelax ran");
-		if(u.d == Integer.MAX_VALUE || u.equals(v))
-			return;
 
-		System.out.println("\t\tRelax u Node: " + u + " Relax v Node: " + v);
-		Edge edge = u.getBackEdge(v);
-		if(v.d > u.d + edge.getWeight()){
-			v.d = u.d + edge.getWeight();
+	private void relax(Node u, Node v) {
+		if(u.d == Integer.MAX_VALUE || u.equals(v)) {
+			return;
+		}
+		float weight = u.getBackEdge(v).getWeight();
+		if(v.d > (u.d + weight)) {
+			v.d = u.d + weight;
 			v.p = u;
 		}
-
 	}
-	
-	
+
+	// TODO: Implement
+	public void doDijkstra(Node source, boolean isRushHour) {
+		for(Edge edge : edges) {
+			edge.setIsRushHour(isRushHour);
+		}
+
+		List<Node> lst = new LinkedList<>(this.nodes);
+
+		initializeSingleSource(source);
+		Queue<Node> nodeQueue = new PriorityQueue<>();
+		nodeQueue.addAll(nodes);
+		while(!nodeQueue.isEmpty()) {
+			Node u = nodeQueue.poll();
+			for(Edge v : u.outboundEdges) {
+				relax(u, v.target);
+			}
+			lst.remove(u);
+			nodeQueue = new PriorityQueue<>(lst);
+		}
+	}
+
 	// TODO: Implement
 	public void printDirections(Node source, Node destination, boolean isRushHour) {
-		doDijkstra(source,isRushHour);
+		doDijkstra(source, isRushHour);
+		System.out.println(destination.d);
+
 	}
-	
+
 	private void printDashes(int numDashes) {
 		for(int i = 0; i < numDashes; i++) {
 			System.out.print("-");
 		}
 		System.out.println();
-		
+
 	}
 	// Implemented for you:
 	public void printNodes() {
@@ -73,7 +78,7 @@ public class Graph {
 		printDashes(25);
 		System.out.println();
 	}
-	
+
 	// Implemented for you:
 	public void printEdges(boolean isRushHour) {
 		System.out.println();
@@ -88,3 +93,4 @@ public class Graph {
 		System.out.println();
 	}
 }
+

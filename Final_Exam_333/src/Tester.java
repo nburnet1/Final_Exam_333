@@ -12,33 +12,33 @@ public class Tester {
 		
 		// Display Graph to the screen 
 
-		System.out.println("Nodes:");
-		graph.printNodes();
-		System.out.println("Edges (NOT Rush Hour):");
-		graph.printEdges(false);
-
-		System.out.println("Edges (Rush Hour):");
-		graph.printEdges(true);
-
-
-		System.out.println("Outputting Graph to JavaScript file (open dijkstra.html in your web browser");
+//		System.out.println("Nodes:");
+//		graph.printNodes();
+//		System.out.println("Edges (NOT Rush Hour):");
+//		graph.printEdges(false);
+//
+//		System.out.println("Edges (Rush Hour):");
+//		graph.printEdges(true);
 
 
+		System.out.println("Outputting Graph to JavaScript file (open dijkstra.html in your web browser)");
 
-		Scanner key = new Scanner(System.in);
 
-		boolean contin = true;
-		String inpt;
-		String origin;
-		String destination;
-		boolean isRushHour;
 
-		boolean inputCheck = false;
-		boolean originCheck = false;
-		boolean destinationCheck = false;
-		Node source = null;
-		Node target = null;
-		int totalWeight = 0;
+//		Scanner key = new Scanner(System.in);
+//
+//		boolean contin = true;
+//		String inpt;
+//		String origin;
+//		String destination;
+//		boolean isRushHour;
+//
+//		boolean inputCheck = false;
+//		boolean originCheck = false;
+//		boolean destinationCheck = false;
+//		Node source = null;
+//		Node target = null;
+//		int totalWeight = 0;
 //		while(contin){
 //
 //			while(!inputCheck){
@@ -69,7 +69,7 @@ public class Tester {
 //
 //			System.out.print("Is it rush hour? (y/N): ");
 //			inpt = key.nextLine();
-//			if(inpt.toLowerCase().startsWith("y")
+//			if(inpt.toLowerCase().startsWith("y"))
 //				isRushHour = true;
 //			else
 //				isRushHour = false;
@@ -78,6 +78,7 @@ public class Tester {
 //
 //			graph.printDirections(source,target,isRushHour);
 //
+//			vis.save("output.js");
 //
 //			System.out.println("Would you like to continue (Y/n): ");
 //			inpt = key.nextLine();
@@ -85,14 +86,16 @@ public class Tester {
 //				contin = false;
 //			inputCheck = false;
 //			totalWeight = 0;
+//
 //		}
-		Node src = graph.nodes.get(3);
-		Node trg = graph.nodes.get(5);
+
+		Node src = graph.nodes.get(1);
+		Node trg = graph.nodes.get(6);
 		System.out.println("Source: " + src);
 		System.out.println("Target: " + trg);
-		graph.printDirections(graph.nodes.get(0),graph.nodes.get(3),false);
+		graph.printDirections(src,trg,true);
+		//graph.printEdges(true);
 		vis.save("output.js");
-		
 	}
 
 }
