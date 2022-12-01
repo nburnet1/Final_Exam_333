@@ -7,9 +7,14 @@ public class Graph {
 	public List<Node> nodes;
 	public List<Edge> edges;
 
+	public List<Node> connectedNodes;
+	public List<String> path;
+
 	public Graph(List<Node> nodes, List<Edge> edges) {
 		this.nodes = nodes;
 		this.edges = edges;
+		connectedNodes = new LinkedList<>();
+		path = new LinkedList<>();
 	}
 
 	private void initializeSingleSource( Node s) {
@@ -28,6 +33,12 @@ public class Graph {
 		if(v.d > (u.d + weight)) {
 			v.d = u.d + weight;
 			v.p = u;
+			//Used for printDirections
+//			connectedNodes.add(u);
+//			if(u.p != null )
+//				if(!path.contains(u.p.name))
+//				path.add(u.p.name);
+
 		}
 	}
 
@@ -47,6 +58,7 @@ public class Graph {
 			for(Edge v : u.outboundEdges) {
 				relax(u, v.target);
 			}
+
 			lst.remove(u);
 			nodeQueue = new PriorityQueue<>(lst);
 		}
@@ -56,6 +68,14 @@ public class Graph {
 	public void printDirections(Node source, Node destination, boolean isRushHour) {
 		doDijkstra(source, isRushHour);
 		System.out.println(destination.d);
+
+//		for(Node node : connectedNodes){
+//			System.out.println(node);
+//		}
+//		for(String str: path){
+//			System.out.print(str + " -> ");
+//		}
+//		System.out.println(destination.name);
 
 	}
 

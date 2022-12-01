@@ -90,10 +90,11 @@ public class Tester {
 //		}
 
 		Node src = graph.nodes.get(1);
-		Node trg = graph.nodes.get(6);
+		Node trg = graph.nodes.get(0);
 		System.out.println("Source: " + src);
 		System.out.println("Target: " + trg);
 		graph.printDirections(src,trg,true);
+		//graph.printEdges(true);
 		//graph.printEdges(true);
 		vis.save("output.js");
 	}
