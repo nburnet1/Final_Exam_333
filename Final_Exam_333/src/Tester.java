@@ -39,7 +39,7 @@ public class Tester {
 		Node source = null;
 		Node target = null;
 		while(contin){
-
+				inputCheck = false;
 			while(!inputCheck){
 				System.out.println("Please enter the Node Source letter: ");
 				origin = key.next().trim().toUpperCase();
@@ -84,9 +84,10 @@ public class Tester {
 			if(inpt.toLowerCase().startsWith("n"))
 				contin = false;
 
-			inputCheck = false;
 			originCheck = false;
 			destinationCheck = false;
+			source = null;
+			target = null;
 
 		}
 

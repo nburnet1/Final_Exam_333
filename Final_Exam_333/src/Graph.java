@@ -6,11 +6,13 @@ public class Graph {
 	public List<Edge> connectedEdges;
 	private float pathWeight;
 
+
 	public Graph(List<Node> nodes, List<Edge> edges) {
 		this.nodes = nodes;
 		this.edges = edges;
 		connectedEdges = new LinkedList<>();
 		pathWeight = 0;
+
 	}
 
 	private void initializeSingleSource( Node s) {
@@ -71,22 +73,23 @@ public class Graph {
 				List<Edge> blockedEdges = new ArrayList<>();
 //				System.out.println("Checking: " + edge);
 				int trgIndex = 0;
-				printDirectionsHelper(edge,destination,edge,connectedEdges, blockedEdges, "",trgIndex);
+				printDirectionsHelper(edge,destination,edge,connectedEdges, blockedEdges,trgIndex,"");
 			}
 		}
 
 
 
 
+
 	}
 
-	private void printDirectionsHelper(Edge edge, Node destination, Edge origin, List<Edge> connectedEdgesTemp, List<Edge> blockedEdges, String path, int trgIndex){
+	private void printDirectionsHelper(Edge edge, Node destination, Edge origin, List<Edge> connectedEdgesTemp, List<Edge> blockedEdges, int trgIndex, String path){
 		//Check for first edge
 		//add weight
 		//check weight
 		//find index where edge equals target
 		//repeat
-//		System.out.println("\tAdding weight from edge: " + edge);
+		System.out.println("\tAdding weight from edge: " + edge);
 		pathWeight += edge.getWeight();
 		if(underWeight(pathWeight, destination)){
 			if(pathWeight == destination.d){
@@ -94,14 +97,15 @@ public class Graph {
 				System.out.println("pathWeight: " + pathWeight + " Actual: " + destination.d);
 				path += edge.source.name + " -> " + edge.target.name;
 				System.out.println("PATH: " + path);
+				pathWeight = 0;
 				return;
 			}
 			trgIndex = findTarget(edge.target,blockedEdges,connectedEdgesTemp);
 			if(trgIndex != -1) {
-//				System.out.println("\t\t\tpathWeight: " + pathWeight);
+				System.out.println("\t\t\tpathWeight: " + pathWeight);
 //				System.out.println("\t\t\ttrgindex: " + trgIndex);
 				path += edge.source.name + " -> ";
-				printDirectionsHelper(connectedEdgesTemp.get(trgIndex), destination, origin, connectedEdgesTemp, blockedEdges,path,trgIndex);
+				printDirectionsHelper(connectedEdgesTemp.get(trgIndex), destination, origin, connectedEdgesTemp, blockedEdges,trgIndex,path);
 			}
 			else {
 //				System.out.println("\t\t\ttrgindex equals -1");
@@ -109,7 +113,8 @@ public class Graph {
 				pathWeight = 0;
 				if(origin.equals(edge))
 					return;
-				printDirectionsHelper(origin, destination, origin, connectedEdgesTemp, blockedEdges,"",trgIndex);
+
+				printDirectionsHelper(origin, destination, origin, connectedEdgesTemp, blockedEdges,trgIndex,"");
 			}
 
 		}
@@ -120,7 +125,8 @@ public class Graph {
 			blockedEdges.add(edge);
 			if(origin.equals(edge))
 				return;
-			printDirectionsHelper(origin,destination,origin,connectedEdgesTemp,blockedEdges,"",trgIndex);
+			path = "";
+			printDirectionsHelper(origin,destination,origin,connectedEdgesTemp,blockedEdges,trgIndex,"");
 
 		}
 
