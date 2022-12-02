@@ -1,49 +1,46 @@
-import java.util.LinkedList;
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 
 public class Graph {
 	public List<Node> nodes;
 	public List<Edge> edges;
 
-	public List<Node> connectedNodes;
+	public List<Edge> connectedEdges;
 	public List<String> path;
+	private float pathWeight;
 
 	public Graph(List<Node> nodes, List<Edge> edges) {
 		this.nodes = nodes;
 		this.edges = edges;
-		connectedNodes = new LinkedList<>();
+		connectedEdges = new LinkedList<>();
 		path = new LinkedList<>();
+		pathWeight = 0;
 	}
 
 	private void initializeSingleSource( Node s) {
 		for(Node node : nodes) {
-			node.d = Integer.MAX_VALUE;
+			node.d = Float.POSITIVE_INFINITY;
 			node.p = null;
 		}
 		s.d = 0;
 	}
 
 	private void relax(Node u, Node v) {
-		if(u.d == Integer.MAX_VALUE || u.equals(v)) {
+		if(u.d == Float.POSITIVE_INFINITY || u.equals(v)) {
 			return;
 		}
 		float weight = u.getBackEdge(v).getWeight();
+
 		if(v.d > (u.d + weight)) {
 			v.d = u.d + weight;
 			v.p = u;
-			//Used for printDirections
-//			connectedNodes.add(u);
-//			if(u.p != null )
-//				if(!path.contains(u.p.name))
-//				path.add(u.p.name);
+			connectedEdges.add(u.getBackEdge(v));
+
 
 		}
 	}
 
 	// TODO: Implement
-	public void doDijkstra(Node source, boolean isRushHour) {
+	public void doDijkstra(Node source, Node destination, boolean isRushHour) {
 		for(Edge edge : edges) {
 			edge.setIsRushHour(isRushHour);
 		}
@@ -66,17 +63,81 @@ public class Graph {
 
 	// TODO: Implement
 	public void printDirections(Node source, Node destination, boolean isRushHour) {
-		doDijkstra(source, isRushHour);
-		System.out.println(destination.d);
+		doDijkstra(source, destination, isRushHour);
+		for(Edge edge : connectedEdges){
+			System.out.println(edge);
+		}
+		System.out.println("Target Weight: " + destination.d);
 
-//		for(Node node : connectedNodes){
-//			System.out.println(node);
-//		}
-//		for(String str: path){
-//			System.out.print(str + " -> ");
-//		}
-//		System.out.println(destination.name);
+		for(Edge edge: connectedEdges){
+			if(edge.source.equals(source)){
+				List<Edge> connectedEdgesTemp = connectedEdges;
+				List<Edge> blockedEdges = new ArrayList<>();
+				System.out.println("Checking: " + edge);
+				printDirectionsHelper(edge,destination,edge,connectedEdgesTemp, blockedEdges);
+			}
+		}
 
+
+
+
+	}
+
+	private void printDirectionsHelper(Edge edge, Node destination, Edge origin, List<Edge> connectedEdgesTemp, List<Edge> blockedEdges){
+		//Check for first edge
+		//add weight
+		//check weight
+		//find index where edge equals target
+		//repeat
+		System.out.println("\tAdding weight from edge: " + edge);
+		pathWeight += edge.getWeight();
+		if(underWeight(pathWeight, destination)){
+			if(pathWeight == destination.d){
+				System.out.println("Path Found!");
+				System.out.println("pathWeight: " + pathWeight + " Actual: " + destination.d);
+				return;
+			}
+			int trgIndex = findTarget(edge.target,blockedEdges,connectedEdgesTemp);
+			if(trgIndex != -1) {
+				System.out.println("\t\t\tpathWeight: " + pathWeight);
+				System.out.println("\t\t\ttrgindex: " + trgIndex);
+				printDirectionsHelper(connectedEdgesTemp.get(trgIndex), destination, origin, connectedEdgesTemp, blockedEdges);
+			}
+			else {
+				System.out.println("\t\t\ttrgindex equals -1");
+				blockedEdges.add(edge);
+				pathWeight = 0;
+				printDirectionsHelper(origin, destination, origin, connectedEdgesTemp, blockedEdges);
+			}
+
+		}
+		else{
+			System.out.println("\t\tOverWeight exiting recursion");
+			System.out.println("\t\tOverweight pathWeight: " + pathWeight);
+			pathWeight = 0;
+			blockedEdges.add(edge);
+			if(origin.equals(edge))
+				return;
+			printDirectionsHelper(origin,destination,origin,connectedEdgesTemp,blockedEdges);
+
+		}
+
+
+
+
+
+
+	}
+	private boolean underWeight(float weight, Node destination){
+		return weight <= destination.d;
+	}
+	private int findTarget(Node target, List<Edge> blockEdges, List<Edge> connectedEdgesTemp){
+		for(int i = 0; i < connectedEdgesTemp.size();i ++){
+			if(connectedEdgesTemp.get(i).source.equals(target) && !blockEdges.contains(connectedEdgesTemp.get(i))){
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	private void printDashes(int numDashes) {
