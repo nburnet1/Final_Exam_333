@@ -3,16 +3,13 @@ import java.util.*;
 public class Graph {
 	public List<Node> nodes;
 	public List<Edge> edges;
-
 	public List<Edge> connectedEdges;
-	public List<String> path;
 	private float pathWeight;
 
 	public Graph(List<Node> nodes, List<Edge> edges) {
 		this.nodes = nodes;
 		this.edges = edges;
 		connectedEdges = new LinkedList<>();
-		path = new LinkedList<>();
 		pathWeight = 0;
 	}
 
@@ -64,17 +61,17 @@ public class Graph {
 	// TODO: Implement
 	public void printDirections(Node source, Node destination, boolean isRushHour) {
 		doDijkstra(source, destination, isRushHour);
-		for(Edge edge : connectedEdges){
-			System.out.println(edge);
-		}
-		System.out.println("Target Weight: " + destination.d);
+//		for(Edge edge : connectedEdges){
+////			System.out.println(edge);
+//		}
+//		System.out.println("Target Weight: " + destination.d);
 
 		for(Edge edge: connectedEdges){
 			if(edge.source.equals(source)){
-				List<Edge> connectedEdgesTemp = connectedEdges;
 				List<Edge> blockedEdges = new ArrayList<>();
-				System.out.println("Checking: " + edge);
-				printDirectionsHelper(edge,destination,edge,connectedEdgesTemp, blockedEdges);
+//				System.out.println("Checking: " + edge);
+				int trgIndex = 0;
+				printDirectionsHelper(edge,destination,edge,connectedEdges, blockedEdges, "",trgIndex);
 			}
 		}
 
@@ -83,42 +80,47 @@ public class Graph {
 
 	}
 
-	private void printDirectionsHelper(Edge edge, Node destination, Edge origin, List<Edge> connectedEdgesTemp, List<Edge> blockedEdges){
+	private void printDirectionsHelper(Edge edge, Node destination, Edge origin, List<Edge> connectedEdgesTemp, List<Edge> blockedEdges, String path, int trgIndex){
 		//Check for first edge
 		//add weight
 		//check weight
 		//find index where edge equals target
 		//repeat
-		System.out.println("\tAdding weight from edge: " + edge);
+//		System.out.println("\tAdding weight from edge: " + edge);
 		pathWeight += edge.getWeight();
 		if(underWeight(pathWeight, destination)){
 			if(pathWeight == destination.d){
 				System.out.println("Path Found!");
 				System.out.println("pathWeight: " + pathWeight + " Actual: " + destination.d);
+				path += edge.source.name + " -> " + edge.target.name;
+				System.out.println("PATH: " + path);
 				return;
 			}
-			int trgIndex = findTarget(edge.target,blockedEdges,connectedEdgesTemp);
+			trgIndex = findTarget(edge.target,blockedEdges,connectedEdgesTemp);
 			if(trgIndex != -1) {
-				System.out.println("\t\t\tpathWeight: " + pathWeight);
-				System.out.println("\t\t\ttrgindex: " + trgIndex);
-				printDirectionsHelper(connectedEdgesTemp.get(trgIndex), destination, origin, connectedEdgesTemp, blockedEdges);
+//				System.out.println("\t\t\tpathWeight: " + pathWeight);
+//				System.out.println("\t\t\ttrgindex: " + trgIndex);
+				path += edge.source.name + " -> ";
+				printDirectionsHelper(connectedEdgesTemp.get(trgIndex), destination, origin, connectedEdgesTemp, blockedEdges,path,trgIndex);
 			}
 			else {
-				System.out.println("\t\t\ttrgindex equals -1");
+//				System.out.println("\t\t\ttrgindex equals -1");
 				blockedEdges.add(edge);
 				pathWeight = 0;
-				printDirectionsHelper(origin, destination, origin, connectedEdgesTemp, blockedEdges);
+				if(origin.equals(edge))
+					return;
+				printDirectionsHelper(origin, destination, origin, connectedEdgesTemp, blockedEdges,"",trgIndex);
 			}
 
 		}
 		else{
-			System.out.println("\t\tOverWeight exiting recursion");
-			System.out.println("\t\tOverweight pathWeight: " + pathWeight);
+//			System.out.println("\t\tOverWeight exiting recursion");
+//			System.out.println("\t\tOverweight pathWeight: " + pathWeight);
 			pathWeight = 0;
 			blockedEdges.add(edge);
 			if(origin.equals(edge))
 				return;
-			printDirectionsHelper(origin,destination,origin,connectedEdgesTemp,blockedEdges);
+			printDirectionsHelper(origin,destination,origin,connectedEdgesTemp,blockedEdges,"",trgIndex);
 
 		}
 

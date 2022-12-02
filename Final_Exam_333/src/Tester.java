@@ -25,78 +25,79 @@ public class Tester {
 
 
 
-//		Scanner key = new Scanner(System.in);
-//
-//		boolean contin = true;
-//		String inpt;
-//		String origin;
-//		String destination;
-//		boolean isRushHour;
-//
-//		boolean inputCheck = false;
-//		boolean originCheck = false;
-//		boolean destinationCheck = false;
-//		Node source = null;
-//		Node target = null;
-//		int totalWeight = 0;
-//		while(contin){
-//
-//			while(!inputCheck){
-//				System.out.println("Please enter the Node Source letter: ");
-//				origin = key.nextLine().trim().toUpperCase();
-//				System.out.println("Please enter the Node Destination letter: ");
-//				destination = key.nextLine().trim().toUpperCase();
-//
-//				for(Edge edge : graph.edges){
-//					if(origin.equals(edge.source.name)){
-//						originCheck = true;
-//						source = edge.source;
-//					}
-//
-//					if(destination.equals(edge.target.name)){
-//						destinationCheck = true;
-//						target = edge.target;
-//					}
-//					if(originCheck && destinationCheck )
-//						inputCheck = true;
-//
-//				}
-//				if(!inputCheck)
-//					System.out.println("Could not find Source/Target Node, Please try again...");
-//
-//
-//			}
-//
-//			System.out.print("Is it rush hour? (y/N): ");
-//			inpt = key.nextLine();
-//			if(inpt.toLowerCase().startsWith("y"))
-//				isRushHour = true;
-//			else
-//				isRushHour = false;
-//
-//			System.out.println("Calculating...");
-//
-//			graph.printDirections(source,target,isRushHour);
-//
-//			vis.save("output.js");
-//
-//			System.out.println("Would you like to continue (Y/n): ");
-//			inpt = key.nextLine();
-//			if(inpt.toLowerCase().startsWith("n"))
-//				contin = false;
-//			inputCheck = false;
-//			totalWeight = 0;
-//
-//		}
+		Scanner key = new Scanner(System.in);
 
-		Node src = graph.nodes.get(1);
-		Node trg = graph.nodes.get(0);
-		System.out.println("Source: " + src);
-		System.out.println("Target: " + trg);
-		graph.printDirections(src,trg,true);
-		//graph.printEdges(true);
-		//graph.printEdges(true);
-		vis.save("output.js");
+		boolean contin = true;
+		String inpt;
+		String origin;
+		String destination;
+		boolean isRushHour;
+
+		boolean inputCheck = false;
+		boolean originCheck = false;
+		boolean destinationCheck = false;
+		Node source = null;
+		Node target = null;
+		while(contin){
+
+			while(!inputCheck){
+				System.out.println("Please enter the Node Source letter: ");
+				origin = key.next().trim().toUpperCase();
+				System.out.println("Please enter the Node Destination letter: ");
+				destination = key.next().trim().toUpperCase();
+
+				for(Edge edge : graph.edges){
+					if(origin.equals(edge.source.name)){
+						originCheck = true;
+						source = edge.source;
+					}
+
+					if(destination.equals(edge.target.name)){
+						destinationCheck = true;
+						target = edge.target;
+					}
+					if(originCheck && destinationCheck )
+						inputCheck = true;
+
+				}
+				if(!inputCheck)
+					System.out.println("Could not find Source/Target Node, Please try again...");
+
+
+			}
+
+			System.out.print("Is it rush hour? (y/N): ");
+			inpt = key.next();
+			if(inpt.toLowerCase().startsWith("y"))
+				isRushHour = true;
+			else
+				isRushHour = false;
+
+			System.out.println("Calculating...");
+
+			graph.printDirections(source,target,isRushHour);
+
+			vis.save("output.js");
+
+			System.out.println("Would you like to continue (Y/n): ");
+			inpt = key.next();
+			if(inpt.toLowerCase().startsWith("n"))
+				contin = false;
+
+			inputCheck = false;
+			originCheck = false;
+			destinationCheck = false;
+
+		}
+
+//		Node src = graph.nodes.get(0);
+//		Node trg = graph.nodes.get(9);
+//		System.out.println("Source: " + src);
+//		System.out.println("Target: " + trg);
+//		graph.printDirections(src,trg,true);
+//		//graph.printEdges(true);
+//		//graph.printEdges(true);
+//		vis.save("output.js");
 	}
 
 }
