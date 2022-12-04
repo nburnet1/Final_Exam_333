@@ -74,6 +74,7 @@ public class Graph {
                 List<Edge> blockedEdges = new ArrayList<>();
                 printDirectionsHelper(edge, destination, edge, connectedEdges, blockedEdges, 0, "");
             }
+            //Small bandaid to fix duplciate output from recursive calls
             if(success){
                 success = false;
                 return;
