@@ -5,6 +5,7 @@ public class Graph {
     public List<Edge> edges;
     public List<Edge> connectedEdges;
     private float pathWeight;
+    private boolean success;
 
 
 
@@ -72,9 +73,15 @@ public class Graph {
                 //creates aux data structure that keeps track of blocked edges making it non-destructive for recursion
                 List<Edge> blockedEdges = new ArrayList<>();
                 printDirectionsHelper(edge, destination, edge, connectedEdges, blockedEdges, 0, "");
+            }
+            if(success){
+                success = false;
                 return;
             }
+
+
         }
+
 
 
     }
@@ -95,6 +102,8 @@ public class Graph {
                 path += edge.source.name + " -> " + edge.target.name;
                 System.out.println("PATH: " + path);
                 pathWeight = 0;
+                success = true;
+
                 //checks to see if the target index is valid
             } else if (trgIndex != -1) {
                 path += edge.source.name + " -> ";

@@ -29,9 +29,9 @@ public class Tester {
         String inpt;
         String origin;
         String destination;
-        boolean isRushHour = false;
+        boolean isRushHour;
 
-        boolean inputCheck = false;
+        boolean inputCheck;
         boolean originCheck = false;
         boolean destinationCheck = false;
         Node source = null;
